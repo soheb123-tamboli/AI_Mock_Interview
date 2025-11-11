@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="interview.css">
+    <link rel="stylesheet" href="styles1.css">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Dashboard -->
+        <div id="dashboard" class="section active">
+           <center><h1>AI Mock Interview Platform</h1></center>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>HR Interview</h3>
+                    <p>Practice common HR interview questions with AI feedback</p>
+
+
+                    <a href="index1.html">
+                    <button id="startHrInterview" class="btn">Start HR Interview</button></a>
+
+
+
+                </div>
+                <div class="card">
+                    <i class="fas fa-code"></i>
+                 
+                    <h3>Technical Interview</h3>
+                    <p>Practice technical interviews for various roles and technologies</p>
+
+
+                    <a href="technical.html">
+                        <button id="startTechnicalInterview" class="btn">Start Technical Interview</button></a>
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-book"></i>
+
+
+
+
+                    <h3>UPSC Interviews</h3>
+                    <!-- Past Interviews Section -->
+<div id="pastInterviews" class="section">
+    <h2>Past Interview Sessions</h2>
+    <div class="search-filter">
+        <input type="text" id="searchHistory" placeholder="Search interviews...">
+        <select id="filterHistory">
+            <option value="all">All Interviews</option>
+            <option value="hr">HR Interviews</option>
+            <option value="technical">Technical Interviews</option>
+        </select>
+    </div>
+    <div class="interview-history" id="interviewHistory">
+        <!-- History items will be added here dynamically -->
+    </div>
+    <div class="action-buttons">
+        <button id="backToDashboardFromHistory" class="btn btn-outline">Back to Dashboard</button>
+    </div>
+</div>
+                    <p>Practice UPSC interviews for various roles and Current Affairs</p>
+                    <a href="index2.html">
+                    <button id="viewHistory" class="btn">Start UPSC Interview</button></div></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Type Selection Modal -->
+        <div id="interviewTypeModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Select Interview Type</h2>
+                <div class="interview-options">
+                    <button id="hrInterviewOption" class="btn-large">
+                        <i class="fas fa-user-tie"></i> HR Interview
+                    </button>
+                    <button id="technicalInterviewOption" class="btn-large">
+                        <i class="fas fa-code"></i> Technical Interview
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HR Questions Setup -->
+        <div id="hrQuestionsSetup" class="section">
+            <h2>HR Interview Questions Setup</h2>
+            <div class="questions-container">
+                <div class="default-questions">
+                    <h3>Default Questions</h3>
+                    <ul id="defaultHrQuestions"></ul>
+                </div>
+                <div class="custom-questions">
+                    <h3>Your Questions</h3>
+                    <ul id="customHrQuestions"></ul>
+                    <div class="add-question">
+                        <input type="text" id="newHrQuestion" placeholder="Add a new question...">
+                        <button id="addHrQuestion" class="btn-small">Add Question</button>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="startHrInterviewBtn" class="btn">Start Interview</button>
+                <button id="backToDashboardFromHrSetup" class="btn btn-outline">Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Technical Role Selection -->
+        <div id="technicalRoleSelection" class="section">
+            <h2>Select Technical Role</h2>
+            <div class="role-options">
+                <button data-role="java" class="role-btn">
+                    <i class="fab fa-java"></i> Java Developer
+                </button>
+                <button data-role="python" class="role-btn">
+                    <i class="fab fa-python"></i> Python Developer
+                </button>
+                <button data-role="javascript" class="role-btn">
+                    <i class="fab fa-js"></i> JavaScript Developer
+                </button>
+                <button data-role="csharp" class="role-btn">
+                    <i class="fas fa-code"></i> C# Developer
+                </button>
+                <button data-role="cpp" class="role-btn">
+                    <i class="fas fa-file-code"></i> C++ Developer
+                </button>
+                <button data-role="frontend" class="role-btn">
+                    <i class="fab fa-html5"></i> Frontend Developer
+                </button>
+                <button data-role="backend" class="role-btn">
+                    <i class="fas fa-server"></i> Backend Developer
+                </button>
+                <button data-role="fullstack" class="role-btn">
+                    <i class="fas fa-globe"></i> Full Stack Developer
+                </button>
+            </div>
+            <div class="action-buttons">
+                <button id="backToDashboardFromTechRole" class="btn btn-outline">Back to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Technical Questions Setup -->
+        <div id="technicalQuestionsSetup" class="section">
+            <h2 id="techRoleTitle">Technical Interview Questions Setup</h2>
+            <div class="questions-container">
+                <div class="default-questions">
+                    <h3>Default Questions</h3>
+                    <ul id="defaultTechQuestions"></ul>
+                </div>
+                <div class="custom-questions">
+                    <h3>Your Questions</h3>
+                    <ul id="customTechQuestions"></ul>
+                    <div class="add-question">
+                        <input type="text" id="newTechQuestion" placeholder="Add a new question...">
+                        <button id="addTechQuestion" class="btn-small">Add Question</button>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="startTechInterviewBtn" class="btn">Start Interview</button>
+                <button id="backToTechRoles" class="btn btn-outline">Back to Roles</button>
+            </div>
+        </div>
+
+        <!-- Interview Interface -->
+        <div id="interviewInterface" class="section">
+            <div class="interview-header">
+                <h2 id="interviewTypeHeader">Interview in Progress</h2>
+                <div class="interview-progress">
+                    <div class="progress-bar">
+                        <div id="progressBarFill" class="progress-fill"></div>
+                    </div>
+                    <span id="progressText">Question 1 of 5</span>
+                </div>
+            </div>
+            
+            <div class="interview-main">
+                <div class="video-container">
+                    <div class="ai-interviewer">
+                        <div class="ai-avatar">
+                            <img src="https://via.placeholder.com/150" alt="AI Interviewer" id="aiAvatar">
+                        </div>
+                        <div class="ai-speech" id="aiSpeech"></div>
+                    </div>
+                    <div class="user-video">
+                        <video id="userVideo" autoplay muted></video>
+                        <div class="video-controls">
+                            <button id="toggleVideo" class="btn-icon" title="Toggle Video">
+                                <i class="fas fa-video"></i>
+                            </button>
+                            <button id="toggleAudio" class="btn-icon" title="Toggle Audio">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interview-controls">
+                    <button id="nextQuestionBtn" class="btn">Next Question</button>
+                    <button id="endInterviewBtn" class="btn btn-outline">End Interview</button>
+                </div>
+            </div>
+            
+            <div class="real-time-feedback">
+                <h3>Real-time Feedback</h3>
+                <div class="feedback-categories">
+                    <div class="feedback-item">
+                        <h4>Filler Words</h4>
+                        <div class="feedback-meter">
+                            <div class="meter-fill" id="fillerWordsMeter"></div>
+                        </div>
+                        <p id="fillerWordsText">No filler words detected</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Vocabulary</h4>
+                        <div class="feedback-meter">
+                            <div class="meter-fill" id="vocabularyMeter"></div>
+                        </div>
+                        <p id="vocabularyText">Good vocabulary usage</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Grammar</h4>
+                        <div class="feedback-meter">
+                            <div class="meter-fill" id="grammarMeter"></div>
+                        </div>
+                        <p id="grammarText">No grammatical errors</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Posture & Gesture</h4>
+                        <div class="feedback-meter">
+                            <div class="meter-fill" id="postureMeter"></div>
+                        </div>
+                        <p id="postureText"> posture detected</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Results -->
+        <div id="interviewResults" class="section">
+            <h2>Interview Results</h2>
+            <div class="results-summary">
+                <div class="overall-score">
+                    <div class="score-circle">
+                        <span id="overallScore">30</span>
+                        <small>Overall</small>
+                    </div>
+                </div>
+                <div class="score-details">
+                    <div class="score-item">
+                        <h4>Communication</h4>
+                        <div class="score-bar">
+                            <div class="bar-fill" style="width: 40%"></div>
+                        </div>
+                        <span>4/10</span>
+                    </div>
+                    <div class="score-item">
+                        <h4>Technical Knowledge</h4>
+                        <div class="score-bar">
+                            <div class="bar-fill" style="width: 30%"></div>
+                        </div>
+                        <span>3/10</span>
+                    </div>
+                    <div class="score-item">
+                        <h4>Confidence</h4>
+                        <div class="score-bar">
+                            <div class="bar-fill" style="width: 25%"></div>
+                        </div>
+                        <span>2.5/10</span>
+                    </div>
+                    <div class="score-item">
+                        <h4>Body Language</h4>
+                        <div class="score-bar">
+                            <div class="bar-fill" style="width: 15%"></div>
+                        </div>
+                        <span>1.5/10</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-feedback">
+                <h3>Question-by-Question Feedback</h3>
+                <div class="feedback-accordion" id="feedbackAccordion"></div>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="viewInterviewRecording" class="btn">
+                    <i class="fas fa-video"></i> 
+                </button>
+                <button id="backToDashboardFromResults" class="btn btn-outline">
+                    Back to Dashboard
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="script1.js"></script>
+</body>
+</html>

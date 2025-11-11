@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI UPSC Mock Interview</title>
+    <style>
+        :root {
+            --primary-color: #1a3e72;
+            --secondary-color: #0d2b57;
+            --accent-color: #e74c3c;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--light-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+        }
+        
+        .interview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .panel {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .interview-panel {
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .feedback-panel {
+            background-color: #f8f9fa;
+            display: none;
+        }
+        
+        select, button, input {
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .question {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: var(--primary-color);
+            line-height: 1.4;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            min-height: 150px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border 0.3s;
+            resize: vertical;
+        }
+        
+        .answer-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 62, 114, 0.2);
+        }
+        
+        .timer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: rgba(26, 62, 114, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .question-counter {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .button-group button {
+            flex: 1;
+        }
+        
+        .feedback-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feedback-category {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-container {
+            margin-top: 15px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.8s ease-out;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 15px;
+        }
+        
+        .metric-name {
+            font-weight: 500;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .visible {
+            display: block;
+        }
+        
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        
+        .settings-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .interview-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .interview-type {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .interview-type:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .interview-type.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 62, 114, 0.05);
+        }
+        
+        .interview-type h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .interview-type p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .speech-bubble {
+            position: relative;
+            background-color: #f0f4ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #d0d8e8;
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #f0f4ff transparent;
+        }
+        
+        .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 19px;
+            border-width: 11px 11px 0;
+            border-style: solid;
+            border-color: #d0d8e8 transparent;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .interview-type-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI UPSC Mock Interview Simulator</h1>
+        <p>Practice for your Civil Services Personality Test with our comprehensive evaluation system</p>
+    </header>
+    
+    <div class="interview-container">
+        <div id="setup-panel" class="panel">
+            <h2>Interview Setup</h2>
+            
+            <div class="tab-container">
+                <div class="tab active" data-tab="settings">Settings</div>
+                <div class="tab" data-tab="instructions">Instructions</div>
+                <div class="tab" data-tab="tips">Tips</div>
+            </div>
+            
+            <div id="settings-tab" class="tab-content active">
+                <div class="settings-group">
+                    <label class="settings-label">Select Interview Type:</label>
+                    <div class="interview-type-selector">
+                        <div class="interview-type selected" data-type="full">
+                            <h3>Full Mock Interview</h3>
+                            <p>Complete 15-20 minute interview covering all question types</p>
+                        </div>
+                        <div class="interview-type" data-type="current-affairs">
+                            <h3>Current Affairs Focus</h3>
+                            <p>Emphasis on recent events and government policies</p>
+                        </div>
+                        <div class="interview-type" data-type="situational">
+                            <h3>Situational Judgement</h3>
+                            <p>Practice handling administrative scenarios</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <label for="optional-subject" class="settings-label">Your Optional Subject:</label>
+                    <select id="optional-subject">
+                        <option value="Public Administration">Public Administration</option>
+                        <option value="History">History</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="Geography">Geography</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Philosophy">Philosophy</option>
+                    </select>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">Interview Duration:</label>
+                    <div style="display: flex; gap: 15px;">
+                        <label style="flex: 1;">
+                            <input type="radio" name="duration" value="15" checked> 15 min (Short)
+                        </label>
+                        <label style="flex: 1;">
+                            <input type="radio" name="duration" value="25"> 25 min (Standard)
+                        </label>
+                        <label style="flex: 1;">
+                            <input type="radio" name="duration" value="40"> 40 min (Extended)
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">Difficulty Level:</label>
+                    <div style="display: flex; gap: 15px; margin-top: 8px;">
+                        <div style="flex: 1;">
+                            <input type="range" id="difficulty" min="1" max="5" value="3" step="1" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; color: #666;">
+                                <span>Easy</span>
+                                <span>Medium</span>
+                                <span>Challenging</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button id="start-btn" class="btn-success" style="padding: 15px 30px; font-size: 18px;">
+                        Start Interview
+                    </button>
+                </div>
+            </div>
+            
+            <div id="instructions-tab" class="tab-content">
+                <h3>How to Use This Simulator</h3>
+                <ul style="line-height: 1.8;">
+                    <li>Select your optional subject and preferred interview type</li>
+                    <li>Choose appropriate duration based on your preparation level</li>
+                    <li>Answer questions as you would in a real UPSC interview</li>
+                    <li>Try to speak your answers aloud (even when typing)</li>
+                    <li>Review feedback carefully after the interview</li>
+                    <li>Practice regularly to improve your performance</li>
+                </ul>
+                
+                <h3 style="margin-top: 25px;">Evaluation Criteria</h3>
+                <p>You'll be assessed on:</p>
+                <ul style="line-height: 1.8;">
+                    <li><strong>Content Knowledge:</strong> Depth, accuracy and relevance of your answers</li>
+                    <li><strong>Communication Skills:</strong> Clarity, fluency and confidence</li>
+                    <li><strong>Critical Thinking:</strong> Analysis, originality and balance</li>
+                    <li><strong>Personality Traits:</strong> Leadership, ethics and problem-solving</li>
+                </ul>
+            </div>
+            
+            <div id="tips-tab" class="tab-content">
+                <h3>UPSC Interview Tips</h3>
+                <div class="speech-bubble">
+                    <p><strong>Structure your answers:</strong> Begin with a clear introduction, present key points logically, and conclude effectively.</p>
+                </div>
+                
+                <div class="speech-bubble">
+                    <p><strong>Be concise:</strong> The board appreciates direct, to-the-point answers rather than long-winded responses.</p>
+                </div>
+                
+                <div class="speech-bubble">
+                    <p><strong>Maintain composure:</strong> Stay calm even if you don't know an answer. Honesty is better than bluffing.</p>
+                </div>
+                
+                <div class="speech-bubble">
+                    <p><strong>Current affairs:</strong> Stay updated on national and international events, government schemes, and policy changes.</p>
+                </div>
+                
+                <div class="speech-bubble">
+                    <p><strong>Know your DAF:</strong> Be prepared to discuss anything mentioned in your Detailed Application Form.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="interview-panel" class="panel interview-panel hidden">
+            <div class="timer-container">
+                <div class="timer">Time: <span id="time-display">00:00</span></div>
+                <div class="question-counter">Question <span id="question-num">1</span> of <span id="total-questions">12</span></div>
+            </div>
+            
+            <div class="avatar-container">
+                <div class="avatar">AI</div>
+            </div>
+            
+            <div class="speech-bubble">
+                <div class="question" id="question-text"></div>
+            </div>
+            
+            <div>
+                <label for="answer-input" style="display: block; margin-bottom: 10px; font-weight: 500;">Your Response:</label>
+                <textarea class="answer-input" id="answer-input" placeholder="Type your answer here (or speak aloud if practicing verbally)..."></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button id="skip-btn">Skip Question</button>
+                <button id="next-btn" class="btn-success">Submit Answer</button>
+            </div>
+            
+            <div style="text-align: right; margin-top: 20px;">
+                <button id="end-btn" class="btn-danger">End Interview</button>
+            </div>
+        </div>
+        
+        <div id="feedback-panel" class="panel feedback-panel">
+            <h2>Interview Feedback Report</h2>
+            <div id="feedback-content"></div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="restart-btn" class="btn-success" style="padding: 15px 30px; font-size: 18px;">
+                    Start New Interview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Question Banks with Difficulty Levels
+        const questionBanks = {
+            currentAffairs: {
+                easy: [
+                    "What is the purpose of the PM-KISAN scheme?",
+                    "Name the current Chief Justice of India.",
+                    "Which country hosted the recent G20 summit?",
+                    "What is the full form of NITI Aayog?",
+                    "Which state recently implemented the Uniform Civil Code?"
+                ],
+                medium: [
+                    "What are the key provisions of the recently passed Digital Personal Data Protection Act?",
+                    "How has India's foreign policy evolved in response to the changing geopolitical landscape?",
+                    "Discuss the significance of the PM Gati Shakti National Master Plan for infrastructure development.",
+                    "What are the major challenges in implementing the National Education Policy 2020?",
+                    "Analyze India's stance on climate change in recent international forums."
+                ],
+                hard: [
+                    "Critically evaluate India's approach to balancing relations between the US and Russia in the context of the Ukraine war.",
+                    "Discuss the implications of the 5G rollout for India's digital divide.",
+                    "How effective has the Production Linked Incentive (PLI) scheme been in boosting manufacturing?",
+                    "Analyze the constitutional challenges in implementing 'One Nation, One Election'.",
+                    "What are the strategic implications of India's new semiconductor policy?"
+                ]
+            },
+            ethics: {
+                easy: [
+                    "What do you understand by 'integrity' in public service?",
+                    "Why is transparency important in governance?",
+                    "Define 'conflict of interest' with an example.",
+                    "What are the seven principles of public life outlined by the Nolan Committee?"
+                ],
+                medium: [
+                    "As a district magistrate, how would you handle a situation where your superior asks you to favor a relative in a land dispute?",
+                    "What do you understand by 'emotional intelligence' and how is it relevant for civil servants?",
+                    "Discuss the ethical dimensions of whistleblowing in government organizations.",
+                    "How would you balance between efficiency and empathy while delivering public services?",
+                    "What is your understanding of 'probity in public life'? Give examples of how it can be practiced."
+                ],
+                hard: [
+                    "You discover that a popular government scheme in your area is being systematically misused by local politicians. What would be your course of action?",
+                    "As an officer, you're offered a bribe to expedite a file. How would you handle this while ensuring the legitimate work isn't delayed?",
+                    "Discuss the ethical dilemma between following rules and doing what seems right in an emergency situation.",
+                    "How would you handle a situation where your honest decision causes unintended hardship to vulnerable sections?",
+                    "Analyze the tension between political neutrality and policy implementation in civil service."
+                ]
+            },
+            optionalSubjects: {
+                "Public Administration": {
+                    easy: [
+                        "What is the difference between public and private administration?",
+                        "Name the father of public administration.",
+                        "What are the principles of organization?"
+                    ],
+                    medium: [
+                        "Critically examine the concept of 'New Public Management'.",
+                        "Discuss the relationship between democracy and bureaucracy.",
+                        "What are the challenges in implementing e-governance in India?"
+                    ],
+                    hard: [
+                        "Analyze the impact of globalization on public administration in developing countries.",
+                        "Evaluate the success of administrative reforms in India since independence.",
+                        "Discuss the challenges of implementing performance-based accountability in government organizations."
+                    ]
+                },
+                "History": {
+                    easy: [
+                        "When did India gain independence?",
+                        "Who was the first Prime Minister of India?",
+                        "Name the first war of Indian independence."
+                    ],
+                    medium: [
+                        "Analyze the causes and consequences of the Revolt of 1857.",
+                        "Discuss the role of women in India's freedom struggle.",
+                        "How did the Bhakti movement influence Indian society?"
+                    ],
+                    hard: [
+                        "Critically examine the economic impact of British colonial rule in India.",
+                        "Analyze the role of Subhash Chandra Bose in India's freedom struggle.",
+                        "Discuss the historiographical debates about the nature of Indian nationalism."
+                    ]
+                },
+                "Political Science": {
+                    easy: [
+                        "Who is known as the father of the Indian Constitution?",
+                        "What are the three organs of government?",
+                        "Name the fundamental rights in the Indian Constitution."
+                    ],
+                    medium: [
+                        "Examine the basic structure doctrine of the Indian Constitution.",
+                        "Discuss the challenges to India's federal structure.",
+                        "What are the various models of secularism? Which one does India follow?"
+                    ],
+                    hard: [
+                        "Analyze the tension between individual rights and public order in Indian constitutional practice.",
+                        "Critically evaluate the working of the parliamentary system in India.",
+                        "Discuss the impact of judicial activism on Indian democracy."
+                    ]
+                },
+                "Geography": {
+                    easy: [
+                        "What are the different types of rocks?",
+                        "Name the longest river in India.",
+                        "What is the difference between weather and climate?"
+                    ],
+                    medium: [
+                        "Discuss the concept of environmental determinism and possibilism.",
+                        "Analyze the impact of globalization on urban landscapes in India.",
+                        "What are the causes and consequences of groundwater depletion in northwestern India?"
+                    ],
+                    hard: [
+                        "Critically examine the theory of plate tectonics and its applications.",
+                        "Analyze the challenges of sustainable development in Himalayan regions.",
+                        "Discuss the geopolitical implications of climate change in South Asia."
+                    ]
+                },
+                "Sociology": {
+                    easy: [
+                        "Define the term 'social stratification'.",
+                        "What is the difference between caste and class?",
+                        "Name some social reformers of India."
+                    ],
+                    medium: [
+                        "Critically examine the concept of 'Sanskritization' in Indian society.",
+                        "Discuss the changing nature of caste system in contemporary India.",
+                        "What are the sociological perspectives on poverty in India?"
+                    ],
+                    hard: [
+                        "Analyze the impact of globalization on traditional Indian family structures.",
+                        "Critically evaluate the reservation policy as a tool for social justice.",
+                        "Discuss the sociological dimensions of religious fundamentalism in India."
+                    ]
+                },
+                "Philosophy": {
+                    easy: [
+                        "Who is considered the father of Western philosophy?",
+                        "What are the main branches of philosophy?",
+                        "Define the term 'ethics'."
+                    ],
+                    medium: [
+                        "Compare and contrast utilitarianism with deontological ethics.",
+                        "Discuss the concept of 'duty' in Kantian philosophy.",
+                        "What is the significance of the 'Allegory of the Cave' in Plato's philosophy?"
+                    ],
+                    hard: [
+                        "Critically examine the concept of 'justice' in Rawls' theory.",
+                        "Analyze the relevance of Gandhian philosophy in contemporary India.",
+                        "Discuss the philosophical basis of human rights."
+                    ]
+                }
+            },
+            situational: {
+                easy: [
+                    "As a BDO, you notice villagers are not sending children to school. How would you address this?",
+                    "You're organizing a vaccination drive but face resistance due to rumors. What would you do?",
+                    "Two departments under you are constantly conflicting. How would you resolve this?"
+                ],
+                medium: [
+                    "You're posted as SDM in a flood-prone district. Heavy rains are forecasted. Outline your preparedness plan.",
+                    "As BDO, you discover a major corruption in MGNREGA implementation. What steps would you take?",
+                    "A religious procession leads to communal tension in your area. How would you handle it?",
+                    "There's a protest against a development project that will displace tribals. How would you mediate?"
+                ],
+                hard: [
+                    "During election duty, you receive credible information about booth capturing planned in a sensitive area. What action would you take?",
+                    "As DM, you must implement an unpopular but necessary government order that will affect many livelihoods. How would you proceed?",
+                    "You discover that your immediate superior is involved in serious corruption. What would be your course of action?",
+                    "A major industrial accident occurs in your district with conflicting reports about casualties. How would you manage the situation?"
+                ]
+            },
+            personal: [
+                "Why do you want to join the civil services?",
+                "How does your educational background prepare you for a career in administration?",
+                "What are your strengths and weaknesses?",
+                "Describe a challenging situation you faced and how you handled it.",
+                "Who has been your role model and why?"
+            ]
+        };
+
+        // Interview state
+        const interviewState = {
+            started: false,
+            interviewType: "full",
+            optionalSubject: "Public Administration",
+            duration: 15,
+            difficulty: 3,
+            currentQuestion: null,
+            askedQuestions: [],
+            startTime: null,
+            timerInterval: null,
+            answers: [],
+            questionStartTime: null,
+            performance: {
+                content: { depth: 0, accuracy: 0, relevance: 0, count: 0 },
+                communication: { clarity: 0, fluency: 0, confidence: 0, count: 0 },
+                criticalThinking: { analysis: 0, originality: 0, balance: 0, count: 0 },
+                personality: { leadership: 0, ethics: 0, problemSolving: 0, count: 0 }
+            },
+            targetQuestions: 12,
+            timePerQuestion: 120,
+            categories: ['currentAffairs', 'ethics', 'optional', 'situational', 'personal']
+        };
+
+        // DOM elements
+        const elements = {
+            startBtn: document.getElementById('start-btn'),
+            endBtn: document.getElementById('end-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            skipBtn: document.getElementById('skip-btn'),
+            restartBtn: document.getElementById('restart-btn'),
+            optionalSubject: document.getElementById('optional-subject'),
+            interviewPanel: document.getElementById('interview-panel'),
+            feedbackPanel: document.getElementById('feedback-panel'),
+            setupPanel: document.getElementById('setup-panel'),
+            questionText: document.getElementById('question-text'),
+            answerInput: document.getElementById('answer-input'),
+            timeDisplay: document.getElementById('time-display'),
+            feedbackContent: document.getElementById('feedback-content'),
+            questionNum: document.getElementById('question-num'),
+            totalQuestions: document.getElementById('total-questions'),
+            difficulty: document.getElementById('difficulty')
+        };
+
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                const tabId = this.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Interview type selection
+        document.querySelectorAll('.interview-type').forEach(type => {
+            type.addEventListener('click', function() {
+                document.querySelectorAll('.interview-type').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                interviewState.interviewType = this.getAttribute('data-type');
+                
+                // Adjust settings based on interview type
+                switch(interviewState.interviewType) {
+                    case 'full':
+                        interviewState.targetQuestions = 12;
+                        interviewState.categories = ['currentAffairs', 'ethics', 'optional', 'situational', 'personal'];
+                        break;
+                    case 'current-affairs':
+                        interviewState.targetQuestions = 8;
+                        interviewState.categories = ['currentAffairs', 'currentAffairs', 'currentAffairs', 'situational'];
+                        break;
+                    case 'situational':
+                        interviewState.targetQuestions = 10;
+                        interviewState.categories = ['situational', 'ethics', 'situational', 'ethics'];
+                        break;
+                }
+                
+                elements.totalQuestions.textContent = interviewState.targetQuestions;
+            });
+        });
+
+        // Difficulty level
+        elements.difficulty.addEventListener('input', function() {
+            interviewState.difficulty = parseInt(this.value);
+        });
+
+        // Duration selection
+        document.querySelectorAll('input[name="duration"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                interviewState.duration = parseInt(this.value);
+                // Adjust time per question based on duration
+                interviewState.timePerQuestion = Math.floor((interviewState.duration * 60) / interviewState.targetQuestions);
+            });
+        });
+
+        // Event listeners
+        elements.startBtn.addEventListener('click', startInterview);
+        elements.endBtn.addEventListener('click', endInterview);
+        elements.nextBtn.addEventListener('click', nextQuestion);
+        elements.skipBtn.addEventListener('click', skipQuestion);
+        elements.restartBtn.addEventListener('click', restartInterview);
+
+        // Initialize
+        elements.totalQuestions.textContent = interviewState.targetQuestions;
+
+        // Functions
+        function startInterview() {
+            interviewState.started = true;
+            interviewState.optionalSubject = elements.optionalSubject.value;
+            interviewState.startTime = new Date();
+            interviewState.timerInterval = setInterval(updateTimer, 1000);
+            interviewState.askedQuestions = [];
+            interviewState.answers = [];
+            interviewState.performance = {
+                content: { depth: 0, accuracy: 0, relevance: 0, count: 0 },
+                communication: { clarity: 0, fluency: 0, confidence: 0, count: 0 },
+                criticalThinking: { analysis: 0, originality: 0, balance: 0, count: 0 },
+                personality: { leadership: 0, ethics: 0, problemSolving: 0, count: 0 }
+            };
+            
+            elements.startBtn.disabled = true;
+            elements.setupPanel.classList.add('hidden');
+            elements.interviewPanel.classList.remove('hidden');
+            elements.feedbackPanel.classList.add('hidden');
+            
+            askQuestion();
+        }
+
+        function endInterview() {
+            interviewState.started = false;
+            clearInterval(interviewState.timerInterval);
+            
+            generateFeedback();
+            elements.interviewPanel.classList.add('hidden');
+            elements.feedbackPanel.classList.remove('hidden');
+        }
+
+        function restartInterview() {
+            // Reset interview state
+            interviewState.askedQuestions = [];
+            interviewState.answers = [];
+            interviewState.performance = {
+                content: { depth: 0, accuracy: 0, relevance: 0, count: 0 },
+                communication: { clarity: 0, fluency: 0, confidence: 0, count: 0 },
+                criticalThinking: { analysis: 0, originality: 0, balance: 0, count: 0 },
+                personality: { leadership: 0, ethics: 0, problemSolving: 0, count: 0 }
+            };
+            
+            elements.answerInput.value = '';
+            elements.feedbackContent.innerHTML = '';
+            elements.feedbackPanel.classList.add('hidden');
+            elements.setupPanel.classList.remove('hidden');
+            
+            // Enable start button
+            elements.startBtn.disabled = false;
+        }
+
+        function askQuestion() {
+            if (interviewState.askedQuestions.length >= interviewState.targetQuestions) {
+                endInterview();
+                return;
+            }
+            
+            // Record question start time for timing analysis
+            interviewState.questionStartTime = new Date();
+            
+            // Update question counter
+            elements.questionNum.textContent = interviewState.askedQuestions.length + 1;
+            
+            // Determine question category based on interview type and progress
+            const category = getNextCategory();
+            let question;
+            
+            if (category === 'optional') {
+                const difficultyLevel = getDifficultyLevel();
+                const subjectQuestions = questionBanks.optionalSubjects[interviewState.optionalSubject][difficultyLevel];
+                question = getRandomQuestion(subjectQuestions, interviewState.askedQuestions);
+            } else if (category === 'personal') {
+                question = getRandomQuestion(questionBanks.personal, interviewState.askedQuestions);
+            } else {
+                const difficultyLevel = getDifficultyLevel();
+                question = getRandomQuestion(questionBanks[category][difficultyLevel], interviewState.askedQuestions);
+            }
+            
+            interviewState.currentQuestion = question;
+            interviewState.askedQuestions.push(question);
+            
+            elements.questionText.textContent = question;
+            elements.answerInput.value = '';
+            elements.answerInput.focus();
+        }
+
+        function getNextCategory() {
+            // For full interview, rotate through categories
+            if (interviewState.interviewType === 'full') {
+                const categories = interviewState.categories;
+                return categories[interviewState.askedQuestions.length % categories.length];
+            }
+            
+            // For specialized interviews, use the predefined category pattern
+            const index = interviewState.askedQuestions.length % interviewState.categories.length;
+            return interviewState.categories[index];
+        }
+
+        function getDifficultyLevel() {
+            // Determine difficulty level based on user setting and question progression
+            const baseDifficulty = interviewState.difficulty;
+            const questionNum = interviewState.askedQuestions.length + 1;
+            
+            // Gradually increase difficulty
+            let adjustedDifficulty = baseDifficulty;
+            if (questionNum > interviewState.targetQuestions * 0.7) {
+                adjustedDifficulty = Math.min(5, baseDifficulty + 1);
+            } else if (questionNum > interviewState.targetQuestions * 0.4) {
+                adjustedDifficulty = baseDifficulty;
+            } else {
+                adjustedDifficulty = Math.max(1, baseDifficulty - 1);
+            }
+            
+            // Map to difficulty levels
+            if (adjustedDifficulty <= 2) return 'easy';
+            if (adjustedDifficulty <= 4) return 'medium';
+            return 'hard';
+        }
+
+        function getRandomQuestion(questionBank, askedQuestions) {
+            const availableQuestions = questionBank.filter(q => !askedQuestions.includes(q));
+            
+            if (availableQuestions.length === 0) {
+                // If all questions have been asked, select randomly from all
+                return questionBank[Math.floor(Math.random() * questionBank.length)];
+            }
+            
+            return availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        }
+
+        function nextQuestion() {
+            const answer = elements.answerInput.value.trim();
+            const timeTaken = (new Date() - interviewState.questionStartTime) / 1000; // in seconds
+            
+            if (answer) {
+                interviewState.answers.push({
+                    question: interviewState.currentQuestion,
+                    answer: answer,
+                    timeTaken: timeTaken
+                });
+                
+                // Analyze answer and update performance metrics
+                analyzeAnswer(answer, timeTaken);
+            }
+            
+            askQuestion();
+        }
+
+        function skipQuestion() {
+            askQuestion();
+        }
+
+        function analyzeAnswer(answer, timeTaken) {
+            // In a real implementation, this would use NLP to analyze the answer
+            // For demo purposes, we'll generate scores based on answer characteristics
+            
+            const question = interviewState.currentQuestion;
+            const category = getQuestionCategory(question);
+            
+            // Basic analysis based on answer length and time taken
+            const answerLength = answer.length;
+            const words = answer.split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            
+            // Content metrics
+            const contentMetrics = interviewState.performance.content;
+            let depth = Math.min(10, wordCount / 15); // More words = deeper answer (simplified)
+            let accuracy = 8 - (Math.random() * 2); // Random with slight variation
+            let relevance = 9 - (Math.random() * 2);
+            
+            // Adjust based on time taken (optimal 1.5-3 minutes per question)
+            const optimalTime = interviewState.timePerQuestion;
+            const timeRatio = timeTaken / optimalTime;
+            // Communication metrics
+            const communicationMetrics = interviewState.performance.communication;
+            let clarity = 8 - (Math.random() * 2);
+            let fluency = 7 - (Math.random() * 3);
+            let confidence = 8 - (Math.random() * 2);
+            
+            // Critical thinking metrics
+            const criticalThinkingMetrics = interviewState.performance.criticalThinking;
+            let analysis = 7 - (Math.random() * 3);
+            let originality = 6 - (Math.random() * 3);
+            let balance = 8 - (Math.random() * 2);
+            
+            // Personality metrics
+            const personalityMetrics = interviewState.performance.personality;
+            let leadership = 7 - (Math.random() * 3);
+            let ethics = 8 - (Math.random() * 2);
+            let problemSolving = 7 - (Math.random() * 3);
+            
+            // Adjust scores based on answer characteristics
+            if (answerLength > 200) {
+                depth = Math.min(10, depth + 1);
+                analysis = Math.min(10, analysis + 1);
+            }
+            
+            if (timeRatio > 1.5) {
+                // Took too long - reduce fluency and confidence
+                fluency = Math.max(1, fluency - 1);
+                confidence = Math.max(1, confidence - 1);
+            } else if (timeRatio < 0.7) {
+                // Too quick - likely superficial
+                depth = Math.max(1, depth - 1);
+                analysis = Math.max(1, analysis - 1);
+            }
+            
+            // Update performance metrics
+            updateMetrics(contentMetrics, depth, accuracy, relevance);
+            updateMetrics(communicationMetrics, clarity, fluency, confidence);
+            updateMetrics(criticalThinkingMetrics, analysis, originality, balance);
+            updateMetrics(personalityMetrics, leadership, ethics, problemSolving);
+        }
+        
+        function updateMetrics(metrics, ...scores) {
+            metrics.count++;
+            const properties = Object.keys(metrics).filter(prop => prop !== 'count');
+            
+            properties.forEach((prop, index) => {
+                metrics[prop] = (metrics[prop] * (metrics.count - 1) + scores[index]) / metrics.count;
+            });
+        }
+        
+        function getQuestionCategory(question) {
+            // Determine which category this question belongs to
+            for (const category in questionBanks) {
+                if (category === 'optionalSubjects') {
+                    const subjectQuestions = questionBanks.optionalSubjects[interviewState.optionalSubject];
+                    for (const level in subjectQuestions) {
+                        if (subjectQuestions[level].includes(question)) {
+                            return 'optional';
+                        }
+                    }
+                } else if (category !== 'personal') {
+                    for (const level in questionBanks[category]) {
+                        if (questionBanks[category][level].includes(question)) {
+                            return category;
+                        }
+                    }
+                }
+            }
+            
+            if (questionBanks.personal.includes(question)) {
+                return 'personal';
+            }
+            
+            return 'currentAffairs'; // default
+        }
+        
+        function updateTimer() {
+            if (!interviewState.startTime) return;
+            
+            const now = new Date();
+            const elapsed = Math.floor((now - interviewState.startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            
+            elements.timeDisplay.textContent = `${minutes}:${seconds}`;
+            
+            // Check if time limit reached
+            if (elapsed >= interviewState.duration * 60) {
+                endInterview();
+            }
+        }
+        
+        function generateFeedback() {
+            let feedbackHTML = `
+                <div class="feedback-item">
+                    <h3>Interview Summary</h3>
+                    <p>You completed ${interviewState.askedQuestions.length} questions in ${interviewState.duration} minutes.</p>
+                    <p>Here's your overall performance analysis:</p>
+                </div>
+            `;
+            
+            // Overall score
+            const overallScore = calculateOverallScore();
+            feedbackHTML += createScoreCard('Overall Performance', overallScore, 'This score reflects your overall interview performance across all evaluation criteria.');
+            
+            // Category breakdown
+            feedbackHTML += `
+                <div class="feedback-item">
+                    <h3>Detailed Breakdown</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${overallScore}%"></div>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-name">Content Knowledge</span>
+                            <span>${Math.round(calculateCategoryScore('content'))}/10</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-name">Communication Skills</span>
+                            <span>${Math.round(calculateCategoryScore('communication'))}/10</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-name">Critical Thinking</span>
+                            <span>${Math.round(calculateCategoryScore('criticalThinking'))}/10</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-name">Personality Traits</span>
+                            <span>${Math.round(calculateCategoryScore('personality'))}/10</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Question-wise feedback
+            feedbackHTML += `
+                <div class="feedback-item">
+                    <h3>Question-wise Analysis</h3>
+            `;
+            
+            interviewState.answers.forEach((item, index) => {
+                const questionCategory = getQuestionCategory(item.question);
+                feedbackHTML += `
+                    <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd;">
+                        <div class="feedback-category">
+                            <span>Question ${index + 1}: ${questionCategory.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</span>
+                            <span style="font-size: 14px; color: #666;">${Math.floor(item.timeTaken)}s</span>
+                        </div>
+                        <p><strong>Q:</strong> ${item.question}</p>
+                        <p><strong>Your Answer:</strong> ${item.answer.length > 150 ? item.answer.substring(0, 150) + '...' : item.answer}</p>
+                        <p><strong>Feedback:</strong> ${generateQuestionFeedback(item.question, item.answer, item.timeTaken)}</p>
+                    </div>
+                `;
+            });
+            
+            feedbackHTML += `</div>`;
+            
+            // Suggestions for improvement
+            feedbackHTML += `
+                <div class="feedback-item">
+                    <h3>Areas for Improvement</h3>
+                    <ul style="line-height: 1.8;">
+                        ${generateImprovementSuggestions()}
+                    </ul>
+                </div>
+            `;
+            
+            elements.feedbackContent.innerHTML = feedbackHTML;
+        }
+        
+        function calculateOverallScore() {
+            const contentScore = calculateCategoryScore('content');
+            const communicationScore = calculateCategoryScore('communication');
+            const criticalThinkingScore = calculateCategoryScore('criticalThinking');
+            const personalityScore = calculateCategoryScore('personality');
+            
+            // Weighted average
+            return (contentScore * 0.3 + communicationScore * 0.25 + criticalThinkingScore * 0.25 + personalityScore * 0.2);
+        }
+        
+        function calculateCategoryScore(category) {
+            const metrics = interviewState.performance[category];
+            const properties = Object.keys(metrics).filter(prop => prop !== 'count');
+            
+            if (metrics.count === 0) return 0;
+            
+            const sum = properties.reduce((total, prop) => total + metrics[prop], 0);
+            return (sum / properties.length) * 10; // Convert to 0-10 scale
+        }
+        
+        function createScoreCard(title, score, description) {
+            const roundedScore = Math.round(score);
+            let colorClass = '';
+            
+            if (score >= 80) colorClass = 'var(--success-color)';
+            else if (score >= 60) colorClass = 'var(--warning-color)';
+            else colorClass = 'var(--accent-color)';
+            
+            return `
+                <div class="feedback-item">
+                    <div class="feedback-category">
+                        <span>${title}</span>
+                        <span style="font-weight: bold; color: ${colorClass}">${roundedScore}/100</span>
+                    </div>
+                    <p>${description}</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${roundedScore}%; background-color: ${colorClass}"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function generateQuestionFeedback(question, answer, timeTaken) {
+            // Generate feedback based on answer characteristics
+            const wordCount = answer.split(/\s+/).length;
+            const timeRatio = timeTaken / interviewState.timePerQuestion;
+            
+            let feedback = [];
+            
+            // Content feedback
+            if (wordCount < 30) {
+                feedback.push("Your answer was quite brief. Try to elaborate more with relevant examples and details.");
+            } else if (wordCount > 150) {
+                feedback.push("Your answer was comprehensive but consider being more concise to maintain the board's interest.");
+            } else {
+                feedback.push("Good balance of detail and conciseness in your answer.");
+            }
+            
+            // Time management feedback
+            if (timeRatio < 0.5) {
+                feedback.push("You answered very quickly. Take a moment to structure your thoughts before responding.");
+            } else if (timeRatio > 1.5) {
+                feedback.push("You took a long time to answer. Practice delivering your points more efficiently.");
+            } else {
+                feedback.push("Good time management for this response.");
+            }
+            
+            // Structure feedback
+            if (answer.split('.').length < 3) {
+                feedback.push("Try structuring your answer with clear introduction, main points, and conclusion.");
+            }
+            
+            // Question-specific feedback
+            const category = getQuestionCategory(question);
+            switch(category) {
+                case 'currentAffairs':
+                    feedback.push("Remember to connect current affairs to broader themes and governance principles.");
+                    break;
+                case 'ethics':
+                    if (!answer.toLowerCase().includes('integrity') && !answer.toLowerCase().includes('honesty') && !answer.toLowerCase().includes('moral')) {
+                        feedback.push("For ethics questions, always relate your answer to core values like integrity and public service.");
+                    }
+                    break;
+                case 'situational':
+                    if (!answer.toLowerCase().includes('rule') && !answer.toLowerCase().includes('law') && !answer.toLowerCase().includes('procedure')) {
+                        feedback.push("In situational questions, emphasize due process while showing empathy and problem-solving.");
+                    }
+                    break;
+                case 'personal':
+                    if (answer.toLowerCase().includes('i want') || answer.toLowerCase().includes('i wish')) {
+                        feedback.push("For 'why civil service' questions, focus more on service than personal ambition.");
+                    }
+                    break;
+            }
+            
+            return feedback.join(' ');
+        }
+        
+        function generateImprovementSuggestions() {
+            const suggestions = [];
+            const performance = interviewState.performance;
+            
+            if (performance.content.depth < 7) {
+                suggestions.push("<li>Work on developing more in-depth knowledge of current affairs and your optional subject.</li>");
+            }
+            
+            if (performance.communication.clarity < 7) {
+                suggestions.push("<li>Practice structuring your answers more clearly with logical flow.</li>");
+            }
+            
+            if (performance.criticalThinking.analysis < 7) {
+                suggestions.push("<li>Focus on developing analytical skills - try to see issues from multiple perspectives.</li>");
+            }
+            
+            if (performance.personality.leadership < 7) {
+                suggestions.push("<li>Highlight leadership qualities more in your responses with concrete examples.</li>");
+            }
+            
+            if (suggestions.length === 0) {
+                suggestions.push("<li>Continue your current preparation strategy with regular mock interviews.</li>");
+                suggestions.push("<li>Work on expanding your knowledge base to handle any unexpected questions.</li>");
+            }
+            
+            // Always include these general suggestions
+            suggestions.push("<li>Practice speaking aloud to improve fluency and reduce hesitation.</li>");
+            suggestions.push("<li>Review recent government schemes and policies for current affairs questions.</li>");
+            suggestions.push("<li>Record yourself answering questions to observe body language and tone.</li>");
+            
+            return suggestions.join('');
+        }
+    </script>
+</body>
+</html>
+           
